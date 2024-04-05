@@ -28,6 +28,10 @@ public class Employee implements Serializable {
     private String sex;
 
     private String idNumber;//身份证号码
+    /**
+     * 宿舍楼
+     */
+    private String buildingName;
 
     private Integer status;
 
