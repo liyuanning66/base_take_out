@@ -13,6 +13,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -128,6 +129,11 @@ public class EmployeeController {
         employeeService.page(pageInfo, queryWrapper);
 
         return R.success(pageInfo);
+    }
+
+    @GetMapping("/list")
+    public R<List<Employee>> getEmployeeByUserId(String buildingName){
+        return R.success(employeeService.getEmployeeByBuildingName(buildingName));
     }
 }
 
