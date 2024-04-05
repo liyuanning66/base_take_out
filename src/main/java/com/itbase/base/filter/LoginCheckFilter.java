@@ -39,7 +39,9 @@ public class LoginCheckFilter implements Filter {
                 "/doc.html",
                 "/webjars/**",
                 "/swagger-resources",
-                "/v2/api-docs"
+                "/v2/api-docs",
+                "/statistics/**",
+                "/point/**"
         };
         //这里就是匹配，匹配成功就放行
         boolean check = check(urls, requestURI);

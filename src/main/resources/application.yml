@@ -7,9 +7,9 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/reggie?characterEncoding=utf-8
+      url: jdbc:mysql://127.0.0.1:3306/base?characterEncoding=utf-8
       username: root
-      password: 123456
+      password: liguang20020807
   redis:
     database: 0
     host: localhost
@@ -29,5 +29,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+  mapper-locations: com/itbase/**/*Mapper.xml
 base:
   path: D:\imgheimait\

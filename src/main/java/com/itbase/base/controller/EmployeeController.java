@@ -1,5 +1,6 @@
 package com.itbase.base.controller;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itbase.base.common.R;
@@ -13,13 +14,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-@Slf4j
+/**
+ * <p>
+ * 员工信息 前端控制器
+ * </p>
+ *
+ * @author me
+ * @since 2024-04-05
+ */
 @RestController
+@Slf4j
 @RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
     /**
      * 员工登入
      * @param request
@@ -47,7 +56,7 @@ public class EmployeeController {
             return R.error("登入失败");
         }
 
-        //密码的比对，如果不一致则返回登入失 败结果
+        //密码的比对，如果不一致则返回登入失败结果
         if(!emp.getPassword().equals(password)){
             return R.error("登入失败");
         }
@@ -82,7 +91,7 @@ public class EmployeeController {
         log.info("新增员工，员工信息：{}", employee.toString());
         //id=null, username=zdddada, name=张三, password=null, phone=14748456154, sex=1, idNumber=148956465421564444
         // , status=null, createTime=null, updateTime=null, createUser=null, updateUser=null
-        //设置初始密码，但是需要加密
+        //设置初始密码，但是需要加缪
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         //设置创建的时间和更新的时间 (添加了mybatisplus自动填充功能)
 //        employee.setCreateTime(LocalDateTime.now());
@@ -104,7 +113,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/page")
-    public R<Page> page(int page, int pageSize, String name){
+    public R<Page> page(int page, int pageSize, String name) {
         //测试了一下三个参数传过来是没有问题的
         log.info("page = {}, pageSize = {}, name = {}", page, pageSize, name);
         //构造分页构造器
@@ -117,40 +126,8 @@ public class EmployeeController {
         queryWrapper.orderByDesc(Employee::getUpdateTime);
         //执行查询
         employeeService.page(pageInfo, queryWrapper);
+
         return R.success(pageInfo);
     }
-
-    /**
-     * 更新员工信息
-     * @param request
-     * @param employee
-     * @return
-     */
-    @PutMapping
-    public R<String> update(HttpServletRequest request, @RequestBody Employee employee){
-        //测试一下后端是否能接受到数据
-        log.info(employee.toString());
-        //设置更新的时间和更新的人(添加了mybatisplus自动填充功能)
-//        employee.setUpdateTime(LocalDateTime.now());
-//        long id = (long)request.getSession().getAttribute("employee");
-//        employee.setUpdateUser(id);
-        employeeService.updateById(employee);
-        return R.success("员工信息修改成功");
-    }
-
-    /**
-     * 通过id查询数据相应给页面
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public R<Employee> getId(@PathVariable long id){
-        log.info("根据id查询员工信息");
-       Employee emp =  employeeService.getById(id);
-       if(emp != null){
-           return R.success(emp);
-       }
-       return R.error("没有查询到员工信息");
-    }
-
 }
+
